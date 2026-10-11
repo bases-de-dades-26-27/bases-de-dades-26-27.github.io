@@ -1,0 +1,33 @@
+# Blocs d'aprenentatge de la portada.
+# Quan publiquis una BA nova, posa-hi l'adreça del seu repo a "url"
+# (per exemple: /disseny/). Si "url" està buit, surt com a "Properament".
+
+- ba: BA1
+  nom: Disseny de bases de dades relacionals
+  ra: RA1, RA6
+  hores: 24
+  url:
+
+- ba: BA2
+  nom: "SQL: consulta i modificació de dades"
+  ra: RA3, RA4
+  hores: 44
+  url: /sql/
+
+- ba: BA3
+  nom: Creació de bases de dades
+  ra: RA2
+  hores: 12
+  url:
+
+- ba: BA4
+  nom: Programació a la base de dades
+  ra: RA5
+  hores: 20
+  url:
+
+- ba: BA5
+  nom: Bases de dades objecte-relacionals
+  ra: RA7
+  hores: 32
+  url:

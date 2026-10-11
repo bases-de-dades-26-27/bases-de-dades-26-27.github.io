@@ -1,0 +1,14 @@
+# Portada de l'organització i tema comú per a totes les BA.
+# Els repos de cada BA fan servir aquest repo com a tema (remote_theme).
+
+title: Bases de dades
+professora: Clàudia Reina
+curs: 2026-27
+modul: M0484
+cicle: DAW
+institut: Institut Sabadell
+lang: ca
+
+exclude:
+  - README.md
+  - plantilla-ba
