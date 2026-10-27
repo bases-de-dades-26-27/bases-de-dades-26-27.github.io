@@ -425,3 +425,18 @@ a:hover { color: var(--enllac-hover); text-decoration-thickness: 2px; }
 .test-resultat.aprovat { background: var(--ok-fons); color: var(--ok); }
 .test-resultat.suspes { background: var(--ko-fons); color: var(--ko); }
 @media print { .test-accions { display: none; } }
+
+/* Requadre destacat: criteri de classe. Ús en markdown: {: .destacat} just després del blockquote */
+:root { --destacat-fons: #fff3e0; --destacat-vora: #ef8f1f; --destacat-titol: #a14f00; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --destacat-fons: #33240f; --destacat-vora: #f5a747; --destacat-titol: #ffc77d; }
+}
+:root[data-theme="dark"] { --destacat-fons: #33240f; --destacat-vora: #f5a747; --destacat-titol: #ffc77d; }
+.apunt blockquote.destacat {
+  background: var(--destacat-fons);
+  border-left: 6px solid var(--destacat-vora);
+  padding: 1rem 1.25rem;
+}
+.apunt blockquote.destacat > p:first-child strong:first-child {
+  display: block; font-family: var(--font-titol); font-size: 1.1rem; color: var(--destacat-titol);
+}
