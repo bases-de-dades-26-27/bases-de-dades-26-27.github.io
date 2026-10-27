@@ -367,3 +367,56 @@ a:hover { color: var(--enllac-hover); text-decoration-thickness: 2px; }
   padding: 0.05em 0.3em;
   white-space: nowrap;
 }
+
+/* Test autocorregible (_includes/test.html) */
+:root { --ok: #1f8a4c; --ok-fons: #e6f6ec; --ko: #c0392b; --ko-fons: #fbeaea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ok: #7bd88f; --ok-fons: #12352a; --ko: #ff8a80; --ko-fons: #3a1a24; }
+}
+:root[data-theme="dark"] { --ok: #7bd88f; --ok-fons: #12352a; --ko: #ff8a80; --ko-fons: #3a1a24; }
+
+.test { margin: 1.5rem 0; }
+.test-pregunta {
+  margin: 0 0 1rem; padding: 1rem 1.1rem 0.9rem;
+  border: 1px solid var(--linia); border-left: 4px solid var(--linia); border-radius: 10px;
+  background: var(--superficie);
+}
+.test-pregunta legend { float: left; width: 100%; padding: 0; margin: 0 0 0.7rem; font-weight: 500; line-height: 1.45; }
+.test-pregunta legend + * { clear: both; }
+.test-num { font-family: var(--font-titol); font-weight: 800; color: var(--tinta-suau); margin-right: 0.2rem; }
+.test-opcions { display: grid; gap: 0.35rem; }
+.test-opcio {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  padding: 0.45rem 0.65rem; border: 1px solid transparent; border-radius: 7px; cursor: pointer;
+}
+.test-opcio:hover { background: var(--zebra); }
+.test-opcio input { margin-top: 0.25rem; accent-color: var(--blau); flex: none; }
+.test-opcio:has(input:disabled) { cursor: default; }
+.test-opcio:has(input:disabled):hover { background: none; }
+.test-pregunta.ok { border-left-color: var(--ok); }
+.test-pregunta.ko, .test-pregunta.buida { border-left-color: var(--ko); }
+.test-opcio.es-correcta { background: var(--ok-fons); border-color: var(--ok); }
+.test-opcio.es-triada:not(.es-correcta) { background: var(--ko-fons); border-color: var(--ko); }
+.test-opcio.es-correcta::after { content: "Correcta"; margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--ok); white-space: nowrap; }
+.test-opcio.es-triada:not(.es-correcta)::after { content: "La teva resposta"; margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--ko); white-space: nowrap; }
+.test-pregunta.buida legend::after { content: " (sense respondre)"; color: var(--ko); font-size: 0.85rem; font-weight: 700; }
+.test-explicacio {
+  margin: 0.75rem 0 0; padding: 0.6rem 0.8rem; border-radius: 7px;
+  background: var(--avis-fons); font-size: 0.93rem; line-height: 1.5;
+}
+.test-accions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+.test-boto {
+  font: inherit; font-weight: 700; padding: 0.6rem 1.3rem; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--mari-700); background: var(--mari-700); color: #fff;
+}
+.test-boto:hover { background: var(--mari-900); }
+.test-boto-sec { background: transparent; color: var(--enllac); border-color: var(--enllac); }
+.test-boto-sec:hover { background: var(--zebra); }
+.test-boto[hidden], .test-explicacio[hidden], .test-resultat[hidden] { display: none; }
+.test-resultat {
+  margin: 1.25rem 0 0; padding: 0.9rem 1.1rem; border-radius: 10px;
+  font-family: var(--font-titol); font-weight: 800; font-size: 1.15rem;
+}
+.test-resultat.aprovat { background: var(--ok-fons); color: var(--ok); }
+.test-resultat.suspes { background: var(--ko-fons); color: var(--ko); }
+@media print { .test-accions { display: none; } }

@@ -1,0 +1,102 @@
+{%- comment -%}
+Test autocorregible. Les preguntes es posen al front matter de la pàgina:
+
+preguntes:
+  - text: "Enunciat (admet `codi` i **negreta**)"
+    opcions:
+      - "Opció A"
+      - "Opció B"
+    correcta: 2          # número de l'opció correcta, comptant des d'1
+    explicacio: "Per què és la correcta."
+
+Ús a la pàgina: posa-hi l'include test.html (vegeu activitats/ dels repos de BA).
+Les opcions es barregen cada vegada que es carrega la pàgina.
+{%- endcomment -%}
+<form class="test" data-test novalidate>
+{%- for p in page.preguntes -%}
+{%- assign num = forloop.index -%}
+<fieldset class="test-pregunta" data-correcta="{{ p.correcta }}">
+<legend><span class="test-num">{{ num }}.</span> {{ p.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</legend>
+<div class="test-opcions">
+{%- for o in p.opcions -%}
+<label class="test-opcio"><input type="radio" name="p{{ num }}" value="{{ forloop.index }}"><span>{{ o | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></label>
+{%- endfor -%}
+</div>
+{%- if p.explicacio -%}
+<p class="test-explicacio" hidden>{{ p.explicacio | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+{%- endif -%}
+</fieldset>
+{%- endfor -%}
+<div class="test-accions">
+<button type="submit" class="test-boto">Corregeix</button>
+<button type="button" class="test-boto test-boto-sec" data-reinicia hidden>Torna-ho a provar</button>
+</div>
+<p class="test-resultat" role="status" aria-live="polite" hidden></p>
+</form>
+<script>(function () {
+  var pendents = document.querySelectorAll("form[data-test]:not([data-iniciat])");
+  var form = pendents[pendents.length - 1];
+  if (!form) return;
+  form.setAttribute("data-iniciat", "");
+  var preguntes = Array.prototype.slice.call(form.querySelectorAll(".test-pregunta"));
+  var resultat = form.querySelector(".test-resultat");
+  var reinicia = form.querySelector("[data-reinicia]");
+  var corregeix = form.querySelector('button[type="submit"]');
+  function barreja(contenidor) {
+    var items = Array.prototype.slice.call(contenidor.children);
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = items[i]; items[i] = items[j]; items[j] = t;
+    }
+    items.forEach(function (el) { contenidor.appendChild(el); });
+  }
+  function inicia() {
+    preguntes.forEach(function (p) {
+      p.classList.remove("ok", "ko", "buida");
+      p.querySelectorAll("input").forEach(function (i) { i.checked = false; i.disabled = false; });
+      p.querySelectorAll(".test-opcio").forEach(function (l) { l.classList.remove("es-correcta", "es-triada"); });
+      var e = p.querySelector(".test-explicacio");
+      if (e) e.hidden = true;
+      barreja(p.querySelector(".test-opcions"));
+    });
+    resultat.hidden = true;
+    resultat.className = "test-resultat";
+    reinicia.hidden = true;
+    corregeix.hidden = false;
+  }
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var encerts = 0, buides = 0;
+    preguntes.forEach(function (p) {
+      var correcta = p.getAttribute("data-correcta");
+      var triada = p.querySelector("input:checked");
+      p.querySelectorAll("input").forEach(function (i) {
+        i.disabled = true;
+        if (i.value === correcta) i.closest(".test-opcio").classList.add("es-correcta");
+      });
+      if (!triada) { buides++; p.classList.add("buida"); }
+      else {
+        triada.closest(".test-opcio").classList.add("es-triada");
+        if (triada.value === correcta) { encerts++; p.classList.add("ok"); }
+        else p.classList.add("ko");
+      }
+      var e = p.querySelector(".test-explicacio");
+      if (e) e.hidden = false;
+    });
+    var total = preguntes.length;
+    var nota = (encerts * 10 / total).toFixed(1).replace(".", ",");
+    resultat.textContent = encerts + " encerts de " + total + ". Nota: " + nota +
+      (buides ? " (" + buides + " sense respondre)" : "") + ".";
+    resultat.classList.add(encerts * 2 >= total ? "aprovat" : "suspes");
+    resultat.hidden = false;
+    corregeix.hidden = true;
+    reinicia.hidden = false;
+    resultat.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  reinicia.addEventListener("click", function () {
+    inicia();
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  inicia();
+})();
+</script>
