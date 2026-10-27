@@ -31,7 +31,7 @@
 </header>
 {% endif %}
 
-<main class="apunt{% if es_index %} index{% endif %}">
+<main class="apunt{% if es_index %} index{% endif %}{% if page.ample %} ample{% endif %}">
 {{ content }}
 {% unless es_index %}
   <p class="tornar"><a href="{{ '/' | relative_url }}">Tornar a l'índex de {{ site.ba }}</a></p>
@@ -41,5 +41,14 @@
 <footer class="peu">
   <p>{{ professora }}, Institut Sabadell, curs {{ curs }}. <a href="{{ portada }}">Tots els blocs</a></p>
 </footer>
+<script>
+/* Els interactius avisen de la seva alçada perquè l'iframe s'ajusti sense barra de desplaçament */
+window.addEventListener('message', function (e) {
+  if (!e.data || !e.data.alcadaSimulador) return;
+  document.querySelectorAll('.interactiu iframe').forEach(function (f) {
+    if (f.contentWindow === e.source) f.style.height = e.data.alcadaSimulador + 'px';
+  });
+});
+</script>
 </body>
 </html>
