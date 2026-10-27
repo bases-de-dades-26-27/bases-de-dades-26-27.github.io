@@ -377,20 +377,25 @@ a:hover { color: var(--enllac-hover); text-decoration-thickness: 2px; }
 
 .test { margin: 1.5rem 0; }
 .test-pregunta {
-  margin: 0 0 1rem; padding: 1rem 1.1rem 0.9rem;
-  border: 1px solid var(--linia); border-left: 4px solid var(--linia); border-radius: 10px;
+  margin: 0 0 2rem; padding: 0; overflow: hidden;
+  border: 1px solid var(--linia); border-left: 5px solid var(--linia); border-radius: 10px;
   background: var(--superficie);
+  box-shadow: 0 1px 3px rgba(11, 24, 62, 0.06);
 }
-.test-pregunta legend { float: left; width: 100%; padding: 0; margin: 0 0 0.7rem; font-weight: 500; line-height: 1.45; }
+.test-pregunta legend {
+  float: left; width: 100%; box-sizing: border-box; margin: 0;
+  padding: 0.85rem 1.15rem; background: var(--cap-taula); border-bottom: 1px solid var(--linia);
+  font-weight: 700; line-height: 1.45;
+}
 .test-pregunta legend + * { clear: both; }
 .test-num { font-family: var(--font-titol); font-weight: 800; color: var(--tinta-suau); margin-right: 0.2rem; }
-.test-opcions { display: grid; gap: 0.35rem; }
+.test-opcions { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.85rem 1rem 1rem; }
 .test-opcio {
   display: flex; gap: 0.6rem; align-items: flex-start;
   padding: 0.45rem 0.65rem; border: 1px solid transparent; border-radius: 7px; cursor: pointer;
 }
 .test-opcio:hover { background: var(--zebra); }
-.test-opcio input { margin-top: 0.25rem; accent-color: var(--blau); flex: none; }
+.test-opcio input { margin: 0.32em 0 0; accent-color: var(--blau); flex: none; }
 .test-opcio:has(input:disabled) { cursor: default; }
 .test-opcio:has(input:disabled):hover { background: none; }
 .test-pregunta.ok { border-left-color: var(--ok); }
@@ -401,7 +406,7 @@ a:hover { color: var(--enllac-hover); text-decoration-thickness: 2px; }
 .test-opcio.es-triada:not(.es-correcta)::after { content: "La teva resposta"; margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--ko); white-space: nowrap; }
 .test-pregunta.buida legend::after { content: " (sense respondre)"; color: var(--ko); font-size: 0.85rem; font-weight: 700; }
 .test-explicacio {
-  margin: 0.75rem 0 0; padding: 0.6rem 0.8rem; border-radius: 7px;
+  margin: 0 1rem 1rem; padding: 0.6rem 0.8rem; border-radius: 7px;
   background: var(--avis-fons); font-size: 0.93rem; line-height: 1.5;
 }
 .test-accions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
